@@ -33,9 +33,10 @@ std::vector<Domain> ReadDomains(std::istream& input, const Number& row_count) {
     std::vector<Domain> read_result;
     std::string input_string;
 
+    read_result.reserve(row_count);
     for (Number i = 0; i < row_count; ++i){
         getline(input, input_string);
-        read_result.push_back(Domain(input_string));
+        read_result.emplace_back(Domain(input_string));
     }
 
     return read_result;
