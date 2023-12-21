@@ -14,7 +14,7 @@ public:
     Domain(std::string_view domain);
     bool operator==(const Domain& rhs);
     bool IsSubdomain(const Domain& domain) const;
-    std::string GetDomainName() const { return this->domain_; }
+    std::string GetDomainName() const;
 private:
     string domain_;
 };
@@ -29,7 +29,7 @@ private:
 };
 
 template<typename Number>
-std::vector<Domain> ReadDomains(std::istream& input, const Number row_count) {
+std::vector<Domain> ReadDomains(std::istream& input, const Number& row_count) {
     std::vector<Domain> read_result;
     std::string input_string;
 
@@ -90,10 +90,10 @@ std::string Domain::GetDomainName() const {
 //--class DomainChecker
 
 template<typename Iter>
-DomainChecker::DomainChecker(Iter begin, Iter end){
-    while (std::distance(begin, end)){
-        forbidden_domains_.push_back(*begin++);
-    }
+DomainChecker::DomainChecker(Iter begin, Iter end)
+    :forbidden_domains_(begin, end)
+{
+  
     std::sort(forbidden_domains_.begin(), forbidden_domains_.end(),
         [](const Domain& lhs, const Domain& rhs) { 
                 return lhs.GetDomainName() < rhs.GetDomainName(); 
